@@ -47,6 +47,9 @@ function handleRoomStateChange(state) {
         case 'lobby':
             showScreen('lobby-screen');
             updateLobbyUI(room.peers, room.clientId);
+            // Reset input fields for a new game
+            document.getElementById('category-input-container').style.display = 'block';
+            document.getElementById('priming-input-container').style.display = 'block';
             break;
         case 'category-selection':
             showScreen('category-screen');
@@ -66,12 +69,12 @@ function handleRoomStateChange(state) {
         case 'round-reveal':
             clearInterval(roundInterval);
             revealAnswers(state, room.presence, room.clientId);
-            setTimeout(checkForNextRound, 5000);
+            setTimeout(checkForNextRound, 5000); // 5 second reveal time
             break;
         case 'game-over':
             clearInterval(roundInterval);
             showScreen('game-over-screen');
-            updateGameOverUI(state.winner, room.peers);
+            updateGameOverUI(state.winner, room.peers, isHost());
             break;
     }
 }
@@ -218,21 +221,9 @@ function checkForNextRound() {
     if (winner) {
         room.updateRoomState({ gameState: 'game-over', winner: winner });
     } else {
-        // Reset presence for next round
-        const resetPresence = {};
-        Object.keys(room.presence).forEach(id => {
-            resetPresence[id] = room.requestPresenceUpdate(id, {
-                answered: false,
-                answer: null,
-            });
-        });
-
-        // The presence update handler will trigger the update for clients
-        room.subscribePresenceUpdateRequests((updateRequest, fromClientId) => {
-            if(room.clientId === fromClientId) return;
-            room.updatePresence(updateRequest);
-        });
-
+        // Each client is responsible for resetting their own presence for the next round
+        // when they see the state change to 'round-active' or 'round-start'.
+        // We will trigger this by moving to 'round-start'.
         room.updateRoomState({ gameState: 'round-start' });
     }
 }
@@ -244,4 +235,3 @@ function isHost() {
 }
 
 export { initializeGame };
-

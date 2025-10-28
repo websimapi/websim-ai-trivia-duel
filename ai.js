@@ -22,7 +22,7 @@ Respond ONLY with a JSON object in the following format, with no other text or e
             json: true,
         });
 
-        const result = JSON.parse(completion.content);
+        const result = completion.content;
 
         // Basic validation
         if (result.question && Array.isArray(result.options) && result.options.length === 4 && result.answer && result.options.includes(result.answer)) {
@@ -39,4 +39,3 @@ Respond ONLY with a JSON object in the following format, with no other text or e
 }
 
 export { generateTrivia };
-

@@ -130,10 +130,18 @@ function revealAnswers(state, presence, clientId) {
 }
 
 
-function updateGameOverUI(winnerId, peers) {
+function updateGameOverUI(winnerId, peers, isHost) {
     const winnerText = document.getElementById('winner-text');
     const winner = peers[winnerId];
-    winnerText.textContent = `${winner.username} wins!`;
+    winnerText.textContent = winner ? `${winner.username} wins!` : 'It\'s a draw!';
+    
+    const playAgainBtn = document.getElementById('play-again-btn');
+    if (isHost) {
+        playAgainBtn.style.display = 'inline-block';
+    } else {
+        playAgainBtn.style.display = 'none';
+        winnerText.textContent += "\nWaiting for the host to start a new game.";
+    }
 }
 
 export {
@@ -146,4 +154,3 @@ export {
     revealAnswers,
     updateGameOverUI
 };
-
