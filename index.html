@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Trivia Duel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Lobby Screen -->
+        <div id="lobby-screen" class="screen">
+            <h1>AI Trivia Duel</h1>
+            <h2>Waiting for players...</h2>
+            <div id="player-list"></div>
+            <button id="start-game-btn" style="display: none;">Start Game</button>
+        </div>
+
+        <!-- Category Selection Screen -->
+        <div id="category-screen" class="screen" style="display: none;">
+            <h1>Choose Your Category</h1>
+            <p>Select a topic for your trivia questions.</p>
+            <div id="category-status"></div>
+            <div id="category-input-container">
+                <input type="text" id="category-input" placeholder="e.g., 'Ancient Rome' or '90s Cartoons'">
+                <button id="submit-category-btn">Submit Category</button>
+            </div>
+        </div>
+
+        <!-- Priming Screen -->
+        <div id="priming-screen" class="screen" style="display: none;">
+            <h1>Add Extra Info (Optional)</h1>
+            <p>Give the AI some extra context for your category to generate better questions.</p>
+            <div id="priming-status"></div>
+            <div id="priming-input-container">
+                <textarea id="priming-input" placeholder="e.g., 'Focus on the Flavian dynasty and the construction of the Colosseum.'"></textarea>
+                <button id="submit-priming-btn">Ready!</button>
+            </div>
+        </div>
+
+        <!-- Round Screen -->
+        <div id="round-screen" class="screen" style="display: none;">
+            <div id="round-header">
+                <div id="scores"></div>
+                <div id="timer"></div>
+            </div>
+            <div id="question-container">
+                <h2>Generating question...</h2>
+                <div id="question-text"></div>
+                <div id="options-container"></div>
+            </div>
+            <div id="waiting-for-players"></div>
+            <div id="round-result"></div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen" style="display: none;">
+            <h1>Game Over</h1>
+            <h2 id="winner-text"></h2>
+            <button id="play-again-btn">Play Again</button>
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "./game.js": "./game.js",
+            "./ui.js": "./ui.js",
+            "./ai.js": "./ai.js"
+        }
+    }
+    </script>
+    <script type="module" src="main.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
+
